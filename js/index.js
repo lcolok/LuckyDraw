@@ -26,6 +26,36 @@ var pool = [
             name: "星乐杯",
             quota: 2
         }
+    ],
+    [
+        {
+            name: "茶具",
+            quota: 25
+        }, {
+            name: "电子秤",
+            quota: 6
+        }, {
+            name: "风扇",
+            quota: 1
+        }, {
+            name: "红酒",
+            quota: 8
+        },
+    ],
+    [
+        {
+            name: "星味大礼包",
+            quota: 1
+        }, {
+            name: "37度学习桌子",
+            quota: 1
+        }, {
+            name: "松下空调",
+            quota: 1
+        }, {
+            name: "欧铂丽床垫",
+            quota: 1
+        },
     ]
 ]
 
@@ -105,7 +135,7 @@ function startLuckDraw(pool) {
 
     var itemArr = pool[round - 1];
     var randomPerson;
-    var wholeHtml='';
+    var wholeHtml = '';
     itemArr.forEach(e => {
 
         //随机中奖人
