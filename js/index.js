@@ -64,7 +64,7 @@ $(function () {
             $("#luckyDrawing").fadeOut();
             clearInterval(timer);//停止输入框动画展示
             $("#luckyDrawing").val(luckyMan[luckyMan.length - 1]);//输入框显示最后一个中奖名字
-            $("#result").fadeIn().find("div").removeClass().addClass("p" + 50);//隐藏输入框，显示中奖框  p后面的数字决定了字体大小
+            $("#result").fadeIn().find("div").removeClass().addClass("p" + 1);//隐藏输入框，显示中奖框  p后面的数字决定了字体大小
             $("#bgLuckyDrawEnd").addClass("bg");//添加中奖背景光辉
             $("#txtNum").attr("placeholder", "输入中奖人数(" + remainPerson.length + ")");
             $("#btnStart").text("开始");//设置按钮文本为开始
@@ -105,19 +105,13 @@ function startLuckDraw(pool) {
 
     var itemArr = pool[round - 1];
     var randomPerson;
-
+    var wholeHtml='';
     itemArr.forEach(e => {
-        e.name
-
-
-
-
-
 
         //随机中奖人
         randomPerson = getRandomArrayElements(remainPerson, e.quota);
 
-        var tempHtml = "<span>" + e.name + "</span>";
+        var tempHtml = `<span class='title'>${e.name}: </span>`;
         $.each(randomPerson, function (i, person) {
             /* if (leaderArr.indexOf(person) > -1 && times == 1) {
                 tempHtml += "<span><b>" + person + "</b></span>";
@@ -126,9 +120,12 @@ function startLuckDraw(pool) {
                 tempHtml += "<span>" + person + "</span>";
             } */
 
-            tempHtml += "<span>" + person + "</span>";
+            tempHtml += `<span> ${person} </span>`;
         });
-        $("#result>div").html(tempHtml);
+
+        wholeHtml += "<p>" + tempHtml + "</p>";
+
+
         //剩余人数剔除已中奖名单
         remainPerson = remainPerson.delete(randomPerson);
         //中奖人员
@@ -143,7 +140,7 @@ function startLuckDraw(pool) {
 
     });
 
-
+    $("#result>div").html(wholeHtml);
 }
 
 //参考这篇文章：http://www.html-js.com/article/JS-rookie-rookie-learned-to-fly-in-a-moving-frame-beating-figures
