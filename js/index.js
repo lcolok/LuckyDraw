@@ -1,19 +1,21 @@
-﻿//抽奖人员名单
-var allPerson = "张三;李四;陈五;王六;蔡七;赖八";
-//领导人员名单
-var leaderArr = ["张三"];
+/*
+相关设置分离到settings.js
+*/
 //未中奖人员名单
 var remainPerson = allPerson.toString().split(";");
 //中奖人员名单
 var luckyMan = [];
 var timer;//定时器
 var times = 1;//抽奖次数,如果不是第一次，不加粗显示领导姓名
+
+
 $(function () {
     iconAnimation();
     //开始抽奖
+    $("#btnStart").text("开始"+"　（共"+remainPerson.length+"人）");//设置按钮文本为开始
     $("#btnStart").on("click", function () {
         //判断是开始还是结束
-        if ($("#btnStart").text() === "开始") {
+        if ($("#btnStart").text().substring(0,2) === "开始") {
             if (!$("#txtNum").val()) {
                 showDialog("请输入中奖人数");
                 return false;
@@ -26,7 +28,7 @@ $(function () {
                 showDialog("当前抽奖人数大于奖池总人数<br>当前抽奖人数：<b>" + $("#txtNum").val() + "</b>人,奖池人数：<b>" + remainPerson.length + "</b>人");
                 return false;
             }
-            $("#result").fadeOut();
+            $("#result").fadeOut("fast");
             //显示动画框，隐藏中奖框
             $("#luckyDrawing").show().next().addClass("hide");
             move();
@@ -34,7 +36,7 @@ $(function () {
             $("#bgLuckyDrawEnd").removeClass("bg");
         }
         else {
-            $("#btnStart").text("开始");//设置按钮文本为开始
+            //PillarsZhang：剩余人数我加的，这边用了全角空格
             var luckyDrawNum = $("#txtNum").val();
             startLuckDraw();//抽奖开始
 
@@ -44,7 +46,8 @@ $(function () {
             $("#result").fadeIn().find("div").removeClass().addClass("p" + luckyDrawNum);//隐藏输入框，显示中奖框
             $("#bgLuckyDrawEnd").addClass("bg");//添加中奖背景光辉
             $("#txtNum").attr("placeholder", "输入中奖人数(" + remainPerson.length + ")");
-        }
+            $("#btnStart").text("开始"+"　（剩余"+remainPerson.length+"人）");//设置按钮文本为开始
+    }
     });
 
     $("#btnReset").on("click", function () {
@@ -57,8 +60,12 @@ $(function () {
             $("#txtNum").val("").attr("placeholder", "请输入中奖人数");
             $("#showName").val("");
             //隐藏中奖名单,然后显示抽奖框
-            $("#result").fadeOut();//.prev().fadeIn()
+            $("#result").fadeOut("normal",function(){
+                $("#result").html("<div><font size=\"10\">准备就绪</font></div>");
+                $("#result").fadeIn();
+                });//动画效果过渡成准备就绪（PillarsZhang）
             $("#bgLuckyDrawEnd").removeClass("bg");//移除背景光辉
+            $("#btnStart").text("开始"+"　（共"+remainPerson.length+"人）");//设置按钮文本为开始
             times++;
             console.log(times);
 
@@ -78,15 +85,11 @@ function startLuckDraw() {
     var randomPerson = getRandomArrayElements(remainPerson, luckyDrawNum);
     var tempHtml = "";
     $.each(randomPerson, function (i, person) {
-        var sizeStyle = "";
-        if (person.length > 3) {
-            sizeStyle = " style=font-size:" + 3 / person.length + "em";
-        }
         if (leaderArr.indexOf(person) > -1 && times == 1) {
-            tempHtml += "<span><span " + sizeStyle + "><b>" + person + "</b></span></span>";
+            tempHtml += "<span><b>" + person + "</b></span>";
         }
         else {
-            tempHtml += "<span><span " + sizeStyle + ">" + person + "</span></span>";
+            tempHtml += "<span>" + person + "</span>";
         }
     });
     $("#result>div").html(tempHtml);
@@ -95,7 +98,13 @@ function startLuckDraw() {
     //中奖人员
     luckyMan = luckyMan.concat(randomPerson);
     //设置抽奖人数框数字为空
-    $("#txtNum").val("");
+
+    if (setEmptyPerson) { $("#txtNum").val("");};
+    /*
+    PillarsZhang补充：有时候不需要每次都把人数框清空
+    根据需求来吧，在settings.js里改
+    */
+
 }
 
 //参考这篇文章：http://www.html-js.com/article/JS-rookie-rookie-learned-to-fly-in-a-moving-frame-beating-figures
