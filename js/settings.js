@@ -9,7 +9,7 @@ for (var i = 1; i <= 300; i++) {
     } else if (i < 100) {
         num = '0' + i;
     } else {
-        num + i;
+        num = i;
     }
     arr.push('No.' + num);
 }
