@@ -28,4 +28,4 @@ var setEmptyPerson = new Boolean();
 setEmptyPerson = false //是否每次抽取后把人数框清空
 
 var setAutoZoom = new Boolean();
-setAutoZoom = true //是否开启自适应缩放
+setAutoZoom = false //是否开启自适应缩放

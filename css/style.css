@@ -75,6 +75,7 @@ html {
 }
 
 #bgLuckyDrawEnd.bg {
+    zoom:12;
     background: url(img/bgLight.png) no-repeat center center;
     -webkit-animation: lightAnimation 5s infinite linear;
     -moz-animation: lightAnimation 5s infinite linear;
@@ -149,7 +150,7 @@ html {
 }
 
 body {
-    zoom:1.5;
+    zoom: 1;
     background: #FFC21C;
     height: 100%;
     width: 100%;
@@ -158,16 +159,29 @@ body {
     overflow: hidden;
     color: white;
     text-align: center;
+    position: absolute;
 }
 
 body>div {
-    background: url(img/bg.png) no-repeat;
+    zoom: 2.85;
     position: absolute;
     top: 50%;
     left: 50%;
     margin: -300px auto auto -400px;
     width: 800px;
     height: 600px;
+    top: 25px;
+}
+
+body>div>bg {
+    zoom: 0.25;
+    background: url(img/bgx4.png) no-repeat;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    z-index: -5;
+    width: 100%;
+    height: 100%;
 }
 
 body>div>header {
