@@ -163,14 +163,14 @@ body {
 }
 
 body>div {
-    zoom: 2.85;
+    zoom: 3;
     position: absolute;
     top: 50%;
     left: 50%;
     margin: -300px auto auto -400px;
     width: 800px;
     height: 600px;
-    top: 25px;
+    top: 40px;
 }
 
 body>div>bg {
@@ -318,7 +318,7 @@ body>div>footer>div>input {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     width: 172px;
-    margin-right: 16px;
+    /* margin-right: 16px; */
 }
 
 body>div>footer>div>button {

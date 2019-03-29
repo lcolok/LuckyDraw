@@ -59,6 +59,29 @@ var pool = [
     ]
 ]
 
+
+
+function toggleFullScreen(forceToDo) {
+    if (!document.fullscreenElement && // alternative standard method
+        !document.mozFullScreenElement && !document.webkitFullscreenElement || forceToDo) {// current working methods
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) {
+            document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullscreen) {
+            document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+        }
+    } else {
+        if (document.cancelFullScreen) {
+            document.cancelFullScreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen();
+        }
+    }
+}
+
 $(function () {
     iconAnimation();
     //开始抽奖
@@ -106,9 +129,10 @@ $(function () {
         var confirmReset = false;
         showConfirm("确认重置吗？所有已中奖的人会重新回到抽奖池！", function () {
             //熏置未中奖人员名单
-            remainPerson = allPerson.toString().split(";");
+          
+            remainPerson = allPerson;
             //中奖人数框置空
-            $("#txtNum").val("").attr("placeholder", "请输入第几轮");
+            $("#txtNum").val(1).attr("placeholder", "请输入第几轮");
             $("#showName").val("");
             //隐藏中奖名单,然后显示抽奖框
             $("#result").fadeOut("normal", function () {
