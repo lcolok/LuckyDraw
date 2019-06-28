@@ -11,7 +11,7 @@ for (var i = 1; i <= 300; i++) {
     } else {
         num = i;
     }
-    arr.push('No.' + num);
+    arr.push(num);
 }
 var allPerson = arr;
 console.log(allPerson);

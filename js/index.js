@@ -8,55 +8,111 @@ var luckyMan = [];
 var timer;//定时器
 var times = 1;//抽奖次数,如果不是第一次，不加粗显示领导姓名
 
+var count = 1;
+
 var pool = [
     [
         {
-            name: "逗号咖啡券",
-            quota: 8
+            name: "洁邦家政2小时保洁服务",
+            quota: 3,
+            staticResult: 'NO.171，NO.082，NO.048'
         }, {
-            name: "家用油壶",
-            quota: 10
+            name: "精酿啤酒",
+            quota: 3,
+            staticResult: 'NO.099，NO.027，NO.001'
         }, {
-            name: "家有健康空气检测1次",
-            quota: 2
-        }, {
-            name: "水杯",
-            quota: 8
-        }, {
-            name: "星乐杯",
-            quota: 2
+            name: "益智积木",
+            quota: 14,
+            staticResult: 'NO.535，NO.475，NO.350，NO.004，NO.115，NO.156，NO.256，NO.063，NO.395，NO.288，NO.161，NO.140，NO.119，NO.128'
         }
     ],
     [
         {
-            name: "茶具",
-            quota: 25
+            name: "巴布噜易道教育50元抵用券",
+            quota: 20,
+            staticResult: 'NO.090，NO.135，NO.210，NO.243，NO.363，NO.278，NO.295，NO.247，NO.182，NO.164，NO.147，NO.057，NO.209，NO.111，NO.153，NO.371，NO.195，NO.204，NO.215，NO.223'
         }, {
-            name: "电子秤",
-            quota: 6
-        }, {
-            name: "风扇",
-            quota: 1
-        }, {
-            name: "红酒",
-            quota: 8
-        },
+            name: "巴布噜易道教育100元抵用券",
+            quota: 20,
+            staticResult: 'NO.234，NO.260，NO.143，NO.313，NO.453，NO.032，NO.512，NO.008，NO.131，NO.550，NO.375，NO.188，NO.193，NO.230，NO.640，NO.674，NO.298，NO.087，NO.056，NO.322'
+        }
     ],
     [
         {
-            name: "星味大礼包",
-            quota: 1
+            name: "TZ舞蹈季卡",
+            quota: 25,
+            staticResult: 'NO.159'
         }, {
-            name: "37度学习桌子",
-            quota: 1
+            name: "至尊披萨家庭套装",
+            quota: 6,
+            staticResult: 'NO.273，NO.285，NO.267，NO.167，NO.078'
         }, {
-            name: "松下空调",
-            quota: 1
+            name: "建行金猪仔",
+            quota: 1,
+            staticResult: 'NO.026，NO.282'
+        }
+    ], [
+        , {
+            name: "儿童跑车",
+            quota: 6,
+            staticResult: 'NO.251，NO.103'
         }, {
-            name: "欧铂丽床垫",
-            quota: 1
+            name: "米摩造型水能V脸美容护理",
+            quota: 1,
+            staticResult: 'NO.0379'
+        }, {
+            name: "米摩造型伊丽莎白焕颜护理",
+            quota: 6,
+            staticResult: 'NO.203'
         },
-    ]
+    ], [{
+        name: "米摩造型无针水光护理",
+        quota: 1,
+        staticResult: 'NO.215'
+    }, {
+        name: "米摩造型网红纹理日系染烫",
+        quota: 1,
+        staticResult: 'NO.367'
+    }, {
+        name: "米摩造型头发SPA护理",
+        quota: 1,
+        staticResult: 'NO.067'
+    }],
+    [{
+        name: "干衣机",
+        quota: 1,
+        staticResult: 'NO.498，NO.326，NO.332'
+    }, {
+        name: "热水器",
+        quota: 1,
+        staticResult: 'NO.498，NO.326，NO.332'
+    }],
+    [{
+        name: "高尔夫推杆练习器",
+        quota: 1,
+        staticResult: 'NO.200，NO.300'
+    }, {
+        name: "TZ舞蹈半年卡",
+        quota: 1,
+        staticResult: 'NO.400'
+    }],
+    [{
+        name: "一年物业费",
+        quota: 1,
+        staticResult: 'NO.100'
+    }, {
+        name: "TZ舞蹈年卡",
+        quota: 1,
+        staticResult: 'NO.020'
+    }], [{
+        name: "盏计花旗参",
+        quota: 1,
+        staticResult: 'NO.320'
+    }, {
+        name: "家有健康特惠家庭医生套餐",
+        quota: 1,
+        staticResult: 'NO.104，NO.222'
+    }]
 ]
 
 
@@ -94,8 +150,9 @@ $(function () {
                 showDialog("请输入第几轮");
                 return false;
             }
-            if ($("#txtNum").val() > pool.length || $("#txtNum").val() <= 0) {
-                showDialog(`只能输入1${pool.length > 1 ? '~' + pool.length : ''}`);
+            if (count > pool.length || $("#txtNum").val() <= 0) {
+                // showDialog(`只能输入1${pool.length > 1 ? '~' + pool.length : ''}`);
+                showDialog(`抽奖完成！`);
                 return false;
             }
             if ($("#txtNum").val() > remainPerson.length) {
@@ -129,7 +186,7 @@ $(function () {
         var confirmReset = false;
         showConfirm("确认重置吗？所有已中奖的人会重新回到抽奖池！", function () {
             //熏置未中奖人员名单
-          
+
             remainPerson = allPerson;
             //中奖人数框置空
             $("#txtNum").val(1).attr("placeholder", "请输入第几轮");
@@ -151,7 +208,9 @@ $(function () {
 //抽奖主程序
 function startLuckDraw(pool) {
     //抽奖人数
-    var round = $("#txtNum").val();
+    var round = count;
+    count++;
+    $("#txtNum").val(round);
     /*     if (luckyDrawNum > remainPerson.length) {
             alert("抽奖人数大于奖池人数！请修改人数。或者点重置开始将新一轮抽奖！");
             return false;
@@ -165,17 +224,31 @@ function startLuckDraw(pool) {
         //随机中奖人
         randomPerson = getRandomArrayElements(remainPerson, e.quota);
 
-        var tempHtml = `<span class='title'>${e.name}: </span>`;
-        $.each(randomPerson, function (i, person) {
-            /* if (leaderArr.indexOf(person) > -1 && times == 1) {
-                tempHtml += "<span><b>" + person + "</b></span>";
-            }
-            else {
-                tempHtml += "<span>" + person + "</span>";
-            } */
+        var tempHtml = `<p><span class='title'>${e.name}</span></p>`;
 
-            tempHtml += `<span> ${person} </span>`;
-        });
+        if (e.staticResult) {
+
+            let staticResult = e.staticResult.split('，');
+            staticResult = staticResult.map(e => {
+                return e.split(/NO./i)[1];
+            });
+            // console.log(staticResult);
+            tempHtml += `<p><span> ${staticResult.join(' ')} </span></p>`;
+        }
+
+
+        // $.each(randomPerson, function (i, person) {
+        //     /* if (leaderArr.indexOf(person) > -1 && times == 1) {
+        //         tempHtml += "<span><b>" + person + "</b></span>";
+        //     }
+        //     else {
+        //         tempHtml += "<span>" + person + "</span>";
+        //     } */
+
+        //     // tempHtml += `<span> ${person} </span>`;
+        //     tempHtml += `<span> ${e.staticResult} </span>`;
+
+        // });
 
         wholeHtml += "<p>" + tempHtml + "</p>";
 
