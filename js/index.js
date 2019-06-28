@@ -43,20 +43,21 @@ var pool = [
             quota: 25,
             staticResult: 'NO.159'
         }, {
-            name: "至尊披萨家庭套装",
-            quota: 6,
-            staticResult: 'NO.273，NO.285，NO.267，NO.167，NO.078'
-        }, {
             name: "建行金猪仔",
             quota: 1,
             staticResult: 'NO.026，NO.282'
-        }
-    ], [
-        , {
+        } , {
             name: "儿童跑车",
             quota: 6,
             staticResult: 'NO.251，NO.103'
-        }, {
+        },
+    ], [
+        {
+            name: "至尊披萨家庭套装",
+            quota: 6,
+            staticResult: 'NO.273，NO.285，NO.267，NO.167，NO.078'
+        },
+        {
             name: "米摩造型水能V脸美容护理",
             quota: 1,
             staticResult: 'NO.0379'
@@ -65,19 +66,19 @@ var pool = [
             quota: 6,
             staticResult: 'NO.203'
         },
-    ], [{
-        name: "米摩造型无针水光护理",
-        quota: 1,
-        staticResult: 'NO.215'
-    }, {
-        name: "米摩造型网红纹理日系染烫",
-        quota: 1,
-        staticResult: 'NO.367'
-    }, {
-        name: "米摩造型头发SPA护理",
-        quota: 1,
-        staticResult: 'NO.067'
-    }],
+        {
+            name: "米摩造型无针水光护理",
+            quota: 1,
+            staticResult: 'NO.215'
+        }, {
+            name: "米摩造型网红纹理日系染烫",
+            quota: 1,
+            staticResult: 'NO.367'
+        }, {
+            name: "米摩造型头发SPA护理",
+            quota: 1,
+            staticResult: 'NO.067'
+        }],
     [{
         name: "干衣机",
         quota: 1,
@@ -224,7 +225,7 @@ function startLuckDraw(pool) {
         //随机中奖人
         randomPerson = getRandomArrayElements(remainPerson, e.quota);
 
-        var tempHtml = `<p><span class='title'>${e.name}</span></p>`;
+        var tempHtml = `<span class='title'>${e.name}：</span>`;
 
         if (e.staticResult) {
 
@@ -233,7 +234,7 @@ function startLuckDraw(pool) {
                 return e.split(/NO./i)[1];
             });
             // console.log(staticResult);
-            tempHtml += `<p><span> ${staticResult.join(' ')} </span></p>`;
+            tempHtml += `<span> ${staticResult.join(' ')} </span>`;
         }
 
 
